@@ -1,22 +1,28 @@
 import { NavLink, Outlet } from "react-router-dom";
 
+import HomeIcon from '@mui/icons-material/Home';
+import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
+import FastfoodIcon from '@mui/icons-material/Fastfood';
+
 const DefaultLayout = () => {
     return (
-        <div id="layout">
-            <header>
-                <p>Jonk Meal Planner</p>
-            </header>
+        <main>
+            <aside>
+                <HomeIcon className="home_icon" />
 
-            <main>
-                <aside>
+                <nav>
                     <NavLink to='/'>
-                        <p>Dashboard</p>
+                        <SpaceDashboardIcon />
                     </NavLink>
-                </aside>
 
-                <Outlet />
-            </main>
-        </div>
+                    <NavLink to='/food'>
+                        <FastfoodIcon />
+                    </NavLink>
+                </nav>
+            </aside>
+
+            <Outlet />
+        </main>
     )
 }
 

@@ -1,0 +1,255 @@
+#meal_plan_page {
+    display: flex;
+}
+
+/* MEAL PLAN SECTION */
+
+#meal_plan {
+    flex: 1;
+    min-width: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding: 30px;
+    padding-right: 0px;
+}
+
+#meal_plan .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#meal_plan .list_btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    border-radius: 10px 0 0 10px;
+    height: 50px;
+    width: 50px;
+    cursor: pointer;
+}
+
+#meal_plan .list_btn.hide {
+    display: none;
+}
+
+#meal_plan .list_btn svg {
+    color: var(--grey);
+    font-size: 35px;
+}
+
+.plan_list .date {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    margin-right: 30px;
+    gap: 10px;
+}
+
+.plan_list .date .add_btn {
+    background-color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.plan_list .date .add_btn:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+}
+
+.plan_list .date .add_btn svg {
+    width: 30px;
+    height: 30px;
+    opacity: 0.4;
+}
+
+.plan_list .list_items {
+    display: flex;
+    gap: 20px;
+    overflow-x: scroll;
+    padding: 2px;
+    padding-bottom: 10px;
+    scrollbar-width: none;
+}
+
+.plan_list .add_container {
+    width: 200px;
+    height: 275px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.plan_list .add_container .add_btn {
+    background-color: white;
+    width: 75px;
+    height: 75px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.plan_list .add_container .add_btn:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+}
+
+.plan_list .add_container .add_btn svg {
+    width: 50px;
+    height: 50px;
+    opacity: 0.4;
+}
+
+.plan_list .add_container .add_btn:hover svg {
+    color: var(--accent);
+    opacity: 1;
+}
+
+
+
+.plan_entry {
+    width: 400px;
+    height: 275px;
+    padding: 10px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 10px;
+    flex-shrink: 0;
+}
+
+.plan_entry:hover {
+    cursor: pointer;
+    outline: 2px solid var(--accent);
+}
+
+.plan_entry img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 10px;
+}
+
+.plan_entry h3 {
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.plan_entry .context {
+    display: flex;
+    justify-content: space-between;
+}
+
+.plan_entry .context p {
+    font-weight: 600;
+    font-size: 16px;
+    text-transform: uppercase;
+}
+
+.plan_entry .assigned {
+    color: var(--grey);
+    opacity: 0.4;
+}
+
+.plan_entry .meal {
+    color: var(--accent);
+}
+
+
+/* SHOPPING LIST SECTION */
+
+#shopping_list {
+    width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex-shrink: 0;
+    background-color: white;
+    padding: 20px 0;
+    box-shadow: 0 0 7px 0 rgba(0, 0, 0, 0.2);
+    transition: width 0.3s ease;
+    box-sizing: border-box;
+    overflow: hidden;
+    max-height: 100vh;
+    height: 100vh;
+}
+
+#shopping_list.open {
+    width: 350px;
+    padding: 20px;
+}
+
+#shopping_list div {
+    flex-shrink: 0;
+}
+
+#shopping_list .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+#shopping_list .header svg {
+    cursor: pointer;
+    font-size: 30px;
+    color: var(--grey);
+}
+
+#shopping_list .list {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--light-grey);
+    min-height: 0;
+    overflow-y: auto;
+}
+
+#shopping_list .list .entry {
+    width: 100%;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    color: var(--grey);
+    font-size: 20px;
+    border-bottom: 1px solid var(--light-grey);
+    gap: 10px;
+    cursor: pointer;
+    user-select: none;
+    overflow-y: scroll;
+}
+
+#shopping_list .list .entry:hover {
+    background-color: var(--teeny-grey);
+}
+
+#shopping_list .list .entry p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#shopping_list .list .entry input[type="checkbox"]:checked~p {
+    text-decoration: line-through;
+}
+
+#shopping_list .buttons {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}

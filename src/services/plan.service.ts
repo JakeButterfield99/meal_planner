@@ -1,0 +1,48 @@
+import api from "./axios";
+
+import { GetDateKey } from "../utils/date";
+import { MealPlan, PlanItem } from "../types/MealPlan";
+
+async function GetMealPlan(monday: Date): Promise<MealPlan> {
+    const mon_str = GetDateKey(monday);
+
+    console.log("GET MEAL PLAN", mon_str);
+
+    return new Promise<MealPlan>(async (resolve, reject) => {
+        try {
+            const response = await api.get('/meal_plan', {
+                params: { monday: mon_str }
+            });
+            return resolve(response.data);
+        }
+        catch (err) {
+            reject(err);
+        }
+    });
+}
+
+async function AddListItem(
+    planId: number,
+    date: string,
+    foodId: number,
+    type: number,
+    assigned: string
+): Promise<PlanItem> {
+    return new Promise<PlanItem>(async (resolve, reject) => {
+        try {
+            const response = await api.post("meal_plan", {
+                planId, date, assigned, type, foodId
+            })
+            return resolve(response.data);
+        }
+        catch (err) {
+            console.log("AddListItem error=", err);
+            reject(err);
+        }
+    });
+}
+
+export default {
+    GetMealPlan,
+    AddListItem,
+}

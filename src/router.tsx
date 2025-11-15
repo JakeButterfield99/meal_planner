@@ -1,6 +1,9 @@
 import { createBrowserRouter, RouteObject } from "react-router-dom";
+
 import DefaultLayout from "./pages/layouts/DefaultLayout";
-import Dashboard from "./pages/Dashboard";
+
+import MealPlanPage from "./pages/MealPlanPage";
+import FoodPage from "./pages/FoodPage";
 
 const routes: RouteObject[] = [
     {
@@ -9,7 +12,11 @@ const routes: RouteObject[] = [
         children: [
             {
                 path: '/',
-                element: <Dashboard />
+                element: <MealPlanPage />
+            },
+            {
+                path: '/food',
+                element: <FoodPage />
             }
         ]
     }
