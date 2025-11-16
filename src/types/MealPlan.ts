@@ -10,7 +10,7 @@ export interface Food {
     image?: string,
     name: string,
     recipe_id?: number,
-    tags: MealType[],
+    tags?: MealType[],
 }
 
 export enum MealType {

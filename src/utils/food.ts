@@ -10,3 +10,10 @@ const TYPE_TEXT = {
 export function GetTypeText(type: MealType) {
     return TYPE_TEXT[type];
 }
+
+export function GetFoodTypes(): number[] {
+    return [
+        MealType.BREAKFAST, MealType.DINNER,
+        MealType.LUNCH, MealType.SNACK
+    ];
+}

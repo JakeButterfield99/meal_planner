@@ -2,6 +2,7 @@ import { MealType } from '../../types/MealPlan';
 import { GetTypeText } from '../../utils/food';
 
 import placeholder_img from '../../assets/placeholder_img.jpg';
+import { GetImage } from '../../utils/image';
 
 interface IProps {
     image?: string,
@@ -10,8 +11,9 @@ interface IProps {
     type: MealType,
 }
 const PlanEntry = (props: IProps) => {
-
-    const image = props.image || placeholder_img;
+    let image = placeholder_img;
+    if (props.image)
+        image = GetImage(props.image);
 
     return (
         <div className="plan_entry">

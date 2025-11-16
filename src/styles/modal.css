@@ -79,7 +79,52 @@
     flex: 1;
 }
 
-.ReactModal__Content .details img {
+.ReactModal__Content .details .image_container {
+    position: relative;
+    width: 100%;
+    height: 250px;
+}
+
+.ReactModal__Content .details .image_container .after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    color: #FFF;
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+.ReactModal__Content .details .image_container .after button {
+    width: 75%;
+    height: 40px;
+}
+
+.ReactModal__Content .details .image_container:hover .after,
+.ReactModal__Content .details .image_container:active .after {
+    display: flex;
+    background: rgba(0, 0, 0, .4);
+}
+
+.ReactModal__Content .details .loading_container {
+    position: relative;
+    width: 100%;
+    height: 250px;
+    background-color: var(--light-grey);
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+}
+
+.ReactModal__Content .details .loading_container img {
+    height: 75px;
+    width: 75px;
+}
+
+.ReactModal__Content .details .image_container img {
     width: 100%;
     height: 250px;
     object-fit: cover;

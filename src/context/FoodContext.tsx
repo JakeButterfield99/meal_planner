@@ -1,5 +1,5 @@
 import React, { ReactNode, useContext, useState } from "react";
-import { Food } from "../types/MealPlan";
+import { Food, MealType } from "../types/MealPlan";
 import foodService from "../services/food.service";
 
 export interface IFoodContext {
@@ -9,6 +9,9 @@ export interface IFoodContext {
     activeFood?: Food,
     setActiveFood: Function,
 
+    activeType?: MealType,
+    setActiveType: Function,
+
     RefreshFood: Function,
 }
 
@@ -17,10 +20,12 @@ const FoodContext = React.createContext<IFoodContext | undefined>(undefined);
 export const FoodProvider = ({ children }: { children: ReactNode }) => {
     const [food, setFood] = useState<Food[]>([]);
     const [activeFood, setActiveFood] = useState<Food>();
+    const [activeType, setActiveType] = useState<MealType>();
 
     function RefreshFood() {
         foodService.GetFood()
             .then((value) => {
+                console.log("SET FOOD", value);
                 setFood(value);
             })
             .catch((err) => console.log(err));
@@ -30,6 +35,7 @@ export const FoodProvider = ({ children }: { children: ReactNode }) => {
         <FoodContext.Provider value={{
             food, setFood,
             activeFood, setActiveFood,
+            activeType, setActiveType,
             RefreshFood
         }}>
             {children}

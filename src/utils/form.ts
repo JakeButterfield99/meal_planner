@@ -16,4 +16,5 @@ export const TYPE_OPTIONS: Option[] = [
     { value: MealType.BREAKFAST, label: GetTypeText(MealType.BREAKFAST) },
     { value: MealType.LUNCH, label: GetTypeText(MealType.LUNCH) },
     { value: MealType.DINNER, label: GetTypeText(MealType.DINNER) },
+    { value: MealType.SNACK, label: GetTypeText(MealType.SNACK) },
 ];

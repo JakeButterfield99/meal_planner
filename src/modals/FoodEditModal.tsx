@@ -5,20 +5,23 @@ import { useMealPlan } from "../context/MealPlanContext";
 import planService from '../services/plan.service';
 import foodService from '../services/food.service';
 
+import { MealType } from "../types/MealPlan";
 import { Option } from '../utils/form';
 import { GetTypeText } from "../utils/food";
+import { GetDateKey, GetShortDate, GetWeekDates } from "../utils/date";
 
 import { Formik, FormikErrors, FormikProps, FormikValues } from 'formik';
 import { toast } from 'react-toastify';
 import Select from 'react-select';
-
 import Modal from 'react-modal';
 
 import placeholder_img from '../assets/placeholder_img.jpg';
-import { MealType } from "../types/MealPlan";
+import loading_gif from '../assets/loading.gif';
+
 import DateSelector from "../components/MealPlan/DateSelector";
-import { GetDateKey, GetDateText, GetShortDate, GetWeekDates } from "../utils/date";
 import AddFoodPlanModal from "./AddFoodPlanModal";
+import imageService from "../services/image.service";
+import { GetImage } from "../utils/image";
 
 const OPTION_LOOKUP: { [type: number]: Option } = {
     [MealType.BREAKFAST]: { value: MealType.BREAKFAST, label: GetTypeText(MealType.BREAKFAST) },
@@ -50,17 +53,18 @@ interface IProps {
     setIsOpen: Function,
 }
 const FoodEditModal = (props: IProps) => {
-    const mealContext = useMealPlan();
     const foodContext = useFood();
     const formRef = useRef<FormikProps<FormikValues>>(null);
 
     const [activePlanDate, setActivePlanDate] = useState<Date>();
     const [activeDate, setActiveDate] = useState<Date>();
     const [addFoodPlanModal, setAddFoodModal] = useState<boolean>(false);
+    const [isLoadingImage, setIsLoadingImage] = useState<boolean>(false);
 
     function CloseModal() {
         foodContext.setActiveFood(undefined);
         props.setIsOpen(false);
+        foodContext.RefreshFood();
     }
 
     function ValidateForm(values: FormikValues): FormikErrors<any> {
@@ -109,16 +113,41 @@ const FoodEditModal = (props: IProps) => {
         })
 
         setAddFoodModal(false);
-        props.setIsOpen(false);
-        foodContext.setActiveFood(undefined);
+        CloseModal();
     }
 
-    async function OpenAddFoodPlan(date: Date) {
+    async function GenerateImage() {
+        if (!foodContext.activeFood) return;
+        setIsLoadingImage(true);
+
+        toast(`Generating image for ${foodContext.activeFood.name}`);
+
+        imageService.GenerateImage(foodContext.activeFood.id)
+            .then((url: string) => {
+                if (!foodContext.activeFood) return;
+                foodContext.setActiveFood({
+                    ...foodContext.activeFood,
+                    image: url,
+                });
+
+                toast(`Successfully generated image`);
+            })
+            .catch(err => {
+                console.log("GENERATE IMAGE ERROR", err);
+                toast(`Image Generation error: `, err);
+            }).finally(() => {
+                setIsLoadingImage(false);
+            });
+    }
+
+    function OpenAddFoodPlan(date: Date) {
         setActiveDate(date);
         setAddFoodModal(true);
     }
 
-    const image = foodContext.activeFood?.image || placeholder_img;
+    let image = placeholder_img;
+    if (foodContext.activeFood?.image)
+        image = GetImage(foodContext.activeFood?.image);
 
     // Sync the displayed dates to active monday
     let dates: Date[] = [];
@@ -147,7 +176,27 @@ const FoodEditModal = (props: IProps) => {
 
             <div className="content">
                 <div className="details">
-                    <img src={image} />
+                    <div
+                        className="image_container"
+                        style={{ display: isLoadingImage ? 'none' : 'block' }}
+                    >
+                        <img src={image} />
+                        <div className="after">
+                            <button
+                                className="alt_button"
+                                onClick={GenerateImage}
+                            >
+                                Generate Image
+                            </button>
+                        </div>
+                    </div>
+
+                    <div
+                        className="loading_container"
+                        style={{ display: isLoadingImage ? 'flex' : 'none' }}
+                    >
+                        <img src={loading_gif} />
+                    </div>
 
                     <Formik
                         innerRef={formRef}

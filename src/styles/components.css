@@ -1,9 +1,11 @@
-.date_selector {
+.date_selector,
+.type_selector {
     display: flex;
     gap: 30px;
 }
 
-.date_selector .option {
+.date_selector .option,
+.type_selector .option {
     width: 150px;
     height: 50px;
     border-radius: 10px;
@@ -15,14 +17,16 @@
     justify-content: center;
     align-items: center;
     flex-shrink: 0;
-    opacity: 0.4;
+    opacity: 0.5;
 }
 
-.date_selector .option:hover {
+.date_selector .option:hover,
+.type_selector .option:hover {
     opacity: 1;
     cursor: pointer;
 }
 
-.date_selector .option.active {
+.date_selector .option.active,
+.type_selector .option.active {
     opacity: 1;
 }
