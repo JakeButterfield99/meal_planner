@@ -8,7 +8,7 @@ import { useFood } from '../context/FoodContext';
 
 import { GetTypeText } from '../utils/food';
 import { GetDateKey, GetDateText } from '../utils/date';
-import { Option } from '../utils/form';
+import { ASSIGNED_OPTIONS, Option, TYPE_OPTIONS } from '../utils/form';
 
 import { Formik, FormikErrors, FormikProps, FormikValues } from 'formik';
 import { toast } from 'react-toastify';
@@ -24,18 +24,6 @@ function MapFoodOptions(food: Food[]): Option[] {
     }));
     return options
 };
-
-const ASSIGNED_OPTIONS: Option[] = [
-    { value: 'shared', label: "Shared" },
-    { value: 'jake', label: "Jake" },
-    { value: 'elser', label: "Elser" },
-];
-
-const TYPE_OPTIONS: Option[] = [
-    { value: MealType.BREAKFAST, label: GetTypeText(MealType.BREAKFAST) },
-    { value: MealType.LUNCH, label: GetTypeText(MealType.LUNCH) },
-    { value: MealType.DINNER, label: GetTypeText(MealType.DINNER) },
-];
 
 interface IProps {
     isOpen: boolean,
@@ -124,6 +112,8 @@ const AddPlanItemModal = (props: IProps) => {
                 onSubmit={values => OnSubmit(values)}
                 initialValues={{
                     food: null,
+                    type: null,
+                    assigned: null
                 }}
             >
                 {({ values, errors, setFieldValue }) => (

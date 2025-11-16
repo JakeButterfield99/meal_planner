@@ -6,8 +6,6 @@ import { MealPlan, PlanItem } from "../types/MealPlan";
 async function GetMealPlan(monday: Date): Promise<MealPlan> {
     const mon_str = GetDateKey(monday);
 
-    console.log("GET MEAL PLAN", mon_str);
-
     return new Promise<MealPlan>(async (resolve, reject) => {
         try {
             const response = await api.get('/meal_plan', {

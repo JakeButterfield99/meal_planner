@@ -17,7 +17,8 @@ import Modal from 'react-modal';
 import placeholder_img from '../assets/placeholder_img.jpg';
 import { MealType } from "../types/MealPlan";
 import DateSelector from "../components/MealPlan/DateSelector";
-import { GetDateText, GetWeekDates } from "../utils/date";
+import { GetDateKey, GetDateText, GetShortDate, GetWeekDates } from "../utils/date";
+import AddFoodPlanModal from "./AddFoodPlanModal";
 
 const OPTION_LOOKUP: { [type: number]: Option } = {
     [MealType.BREAKFAST]: { value: MealType.BREAKFAST, label: GetTypeText(MealType.BREAKFAST) },
@@ -54,6 +55,8 @@ const FoodEditModal = (props: IProps) => {
     const formRef = useRef<FormikProps<FormikValues>>(null);
 
     const [activePlanDate, setActivePlanDate] = useState<Date>();
+    const [activeDate, setActiveDate] = useState<Date>();
+    const [addFoodPlanModal, setAddFoodModal] = useState<boolean>(false);
 
     function CloseModal() {
         foodContext.setActiveFood(undefined);
@@ -88,6 +91,33 @@ const FoodEditModal = (props: IProps) => {
             })
     }
 
+    async function AddToMealPlan(type: number, assigned: string) {
+        if (!foodContext.activeFood) return;
+        if (!activePlanDate) return;
+        if (!activeDate) return;
+        const plan = await planService.GetMealPlan(activePlanDate);
+        planService.AddListItem(
+            plan.id,
+            GetDateKey(activeDate),
+            foodContext.activeFood.id,
+            type,
+            assigned
+        ).then(value => {
+            toast(`${value.food.name} assigned to ${value.date} (${GetTypeText(value.type)})`);
+        }).catch(err => {
+            console.log("FOOD ADD ERR", err);
+        })
+
+        setAddFoodModal(false);
+        props.setIsOpen(false);
+        foodContext.setActiveFood(undefined);
+    }
+
+    async function OpenAddFoodPlan(date: Date) {
+        setActiveDate(date);
+        setAddFoodModal(true);
+    }
+
     const image = foodContext.activeFood?.image || placeholder_img;
 
     // Sync the displayed dates to active monday
@@ -104,6 +134,13 @@ const FoodEditModal = (props: IProps) => {
             onRequestClose={CloseModal}
             className="food_edit_modal"
         >
+            <AddFoodPlanModal
+                isOpen={addFoodPlanModal}
+                setIsOpen={setAddFoodModal}
+                date={activeDate}
+                onSubmit={AddToMealPlan}
+            />
+
             <div className='header'>
                 <h2>{foodContext.activeFood?.name}</h2>
             </div>
@@ -148,26 +185,29 @@ const FoodEditModal = (props: IProps) => {
 
                     </Formik>
                 </div>
+            </div>
 
-                <div className="plan_section">
-                    <h2>Add to Meal Plan</h2>
+            <div className="plan_section">
+                <h2>Add to Meal Plan</h2>
 
-                    <div className="add_to_plan">
-                        <DateSelector
-                            SetActiveDate={(date: Date) => setActivePlanDate(date)}
-                        />
+                <div className="add_to_plan">
+                    <DateSelector
+                        SetActiveDate={(date: Date) => setActivePlanDate(date)}
+                    />
 
-                        <div className="dates">
-                            {dates.map((value, index) => {
-                                return (
-                                    <div key={index} className="date_entry">
-                                        <p>
-                                            {value.toLocaleDateString('en-US', { weekday: 'short' })}
-                                        </p>
-                                    </div>
-                                )
-                            })}
-                        </div>
+                    <div className="dates">
+                        {dates.map((value, index) => {
+                            return (
+                                <div
+                                    key={index}
+                                    onClick={() => OpenAddFoodPlan(value)}
+                                    className="date_entry"
+                                >
+                                    <p>{value.toLocaleDateString('en-US', { weekday: 'short' })}</p>
+                                    <p className="short_date">{GetShortDate(value)}</p>
+                                </div>
+                            )
+                        })}
                     </div>
                 </div>
             </div>

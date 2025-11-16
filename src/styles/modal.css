@@ -96,6 +96,7 @@
     width: 140px;
     height: 40px;
     background-color: var(--light-grey);
+    color: var(--dark_grey);
 }
 
 .ReactModal__Content .dates {
@@ -105,19 +106,26 @@
 }
 
 .ReactModal__Content .date_entry {
-    height: 40px;
     width: calc((50vw - 40px - 60px - 40px) / 7);
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     border-radius: 10px;
     border: 2px solid var(--grey);
     background-color: white;
     cursor: pointer;
+    font-size: 16px;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--grey);
+    padding: 10px 0;
+    font-weight: 700;
 }
 
 .ReactModal__Content .date_entry:hover {
     background-color: var(--light-grey);
+    color: var(--dark_grey);
 }
 
 
@@ -140,13 +148,26 @@
 }
 
 .ReactModal__Content.food_edit_modal .plan_section {
-    background-color: white;
-    border-radius: 10px;
-    padding: 10px;
-    box-shadow: 0 0 7px 0 rgba(0, 0, 0, 0.2);
+    border-top: 2px solid var(--light-grey);
+    padding: 20px;
 }
 
 .ReactModal__Content.food_edit_modal .plan_section h2 {
+    font-size: 20px;
     text-align: center;
     margin-bottom: 10px;
+}
+
+.ReactModal__Content.food_edit_modal .short_date {
+    text-transform: lowercase;
+    font-weight: 500;
+}
+
+.ReactModal__Content.add_food_modal {
+    min-height: 0;
+    height: auto;
+}
+
+.ReactModal__Content.add_food_modal form {
+    gap: 20px;
 }

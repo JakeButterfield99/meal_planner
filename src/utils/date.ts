@@ -27,6 +27,13 @@ export function GetDateKey(date: Date): string {
     return `${year}-${month}-${day}`;
 }
 
+// Converts date to short DDst/th/nd format
+export function GetShortDate(date: Date): string {
+    const day = date.getDate();
+
+    return `${day}${GetDaySuffix(day)}`;
+}
+
 // Get all days of week from a given monday
 export function GetWeekDates(mon: Date): Date[] {
     let dates = [mon];

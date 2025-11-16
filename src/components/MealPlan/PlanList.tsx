@@ -34,10 +34,6 @@ const PlanList = (props: IProps) => {
 
 	function AddPlanItem() {
 		context.setActivePlanDate(props.date);
-
-		toast("BIG TEST", {
-			autoClose: false,
-		});
 	}
 
 	return (
