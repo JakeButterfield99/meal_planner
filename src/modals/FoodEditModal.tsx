@@ -1,14 +1,17 @@
-import { useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { useFood } from "../context/FoodContext";
-import { useMealPlan } from "../context/MealPlanContext";
+import { useModal } from "../context/ModalContext";
+import { useRecipe } from "../context/RecipeContext";
 
 import planService from '../services/plan.service';
 import foodService from '../services/food.service';
+import imageService from "../services/image.service";
 
-import { MealType } from "../types/MealPlan";
+import { MealType, Recipe } from "../types/MealPlan";
 import { Option } from '../utils/form';
 import { GetTypeText } from "../utils/food";
 import { GetDateKey, GetShortDate, GetWeekDates } from "../utils/date";
+import { GetImage } from "../utils/image";
 
 import { Formik, FormikErrors, FormikProps, FormikValues } from 'formik';
 import { toast } from 'react-toastify';
@@ -17,11 +20,11 @@ import Modal from 'react-modal';
 
 import placeholder_img from '../assets/placeholder_img.jpg';
 import loading_gif from '../assets/loading.gif';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import CloseIcon from '@mui/icons-material/Close';
 
 import DateSelector from "../components/MealPlan/DateSelector";
 import AddFoodPlanModal from "./AddFoodPlanModal";
-import imageService from "../services/image.service";
-import { GetImage } from "../utils/image";
 
 const OPTION_LOOKUP: { [type: number]: Option } = {
     [MealType.BREAKFAST]: { value: MealType.BREAKFAST, label: GetTypeText(MealType.BREAKFAST) },
@@ -48,12 +51,26 @@ function GetOptionsFromTags(tags: MealType[] | undefined): Option[] {
     return options;
 }
 
+function GetOptionsFromRecipes(recipes: Recipe[] | undefined): Option[] {
+    if (!recipes) return [];
+    const options: Option[] = [];
+
+    recipes.forEach((value) => {
+        options.push({ value: value.id, label: value.name });
+    });
+
+    return options;
+}
+
 interface IProps {
     isOpen: boolean,
     setIsOpen: Function,
+    setViewMode: Function,
 }
 const FoodEditModal = (props: IProps) => {
     const foodContext = useFood();
+    const modalContext = useModal();
+    const recipeContext = useRecipe();
     const formRef = useRef<FormikProps<FormikValues>>(null);
 
     const [activePlanDate, setActivePlanDate] = useState<Date>();
@@ -61,10 +78,17 @@ const FoodEditModal = (props: IProps) => {
     const [addFoodPlanModal, setAddFoodModal] = useState<boolean>(false);
     const [isLoadingImage, setIsLoadingImage] = useState<boolean>(false);
 
+    const recipeOptions = useMemo(() => {
+        return recipeContext.recipes.map((recipe) => ({
+            value: recipe.id,
+            label: recipe.name,
+        }));
+    }, [recipeContext.recipes]);
+
     function CloseModal() {
-        foodContext.setActiveFood(undefined);
-        props.setIsOpen(false);
         foodContext.RefreshFood();
+        props.setIsOpen(false);
+        props.setViewMode(true);
     }
 
     function ValidateForm(values: FormikValues): FormikErrors<any> {
@@ -85,13 +109,22 @@ const FoodEditModal = (props: IProps) => {
             tags.push(tag.value);
         });
 
-        foodService.EditFood(foodContext.activeFood.id, values.name, image, tags)
+        const recipes: Recipe[] = [];
+        values.recipes.forEach((recipe: Option) => {
+            const found = recipeContext.recipes.find(r => r.id === recipe.value);
+            if (found) recipes.push(found);
+        });
+
+        foodService.EditFood(foodContext.activeFood.id, values.name, image, tags, recipes)
             .then(data => {
                 console.log("EDIT SUCCESS", data);
+                toast(`Edit successful for: ${foodContext.activeFood?.name}`);
                 foodContext.setActiveFood(data);
+                CloseModal();
             })
             .catch(err => {
                 console.log("GOT EDIT ERR", err);
+                toast(`Edit error:`, err);
             })
     }
 
@@ -140,6 +173,25 @@ const FoodEditModal = (props: IProps) => {
             });
     }
 
+    async function ConfirmDeleteFood() {
+        if (!foodContext.activeFood) return;
+        foodService.DeleteFood(foodContext.activeFood?.id)
+            .then(() => {
+                toast(`Deleted Food Item: ${foodContext.activeFood?.name}`);
+                CloseModal();
+            })
+            .catch(err => console.log("DELETE ERR", err));
+    }
+
+    async function DeleteFood() {
+        modalContext.show({
+            title: "Are you sure?",
+            text: `Do you want to delete: ${foodContext.activeFood?.name}`,
+            confirm_cb: () => ConfirmDeleteFood(),
+            cancel_cb: () => { },
+        });
+    }
+
     function OpenAddFoodPlan(date: Date) {
         setActiveDate(date);
         setAddFoodModal(true);
@@ -154,14 +206,11 @@ const FoodEditModal = (props: IProps) => {
     if (activePlanDate)
         dates = GetWeekDates(activePlanDate);
 
-    if (activePlanDate)
-        console.log(activePlanDate, GetWeekDates(activePlanDate));
-
     return (
         <Modal
             isOpen={props.isOpen}
             onRequestClose={CloseModal}
-            className="food_edit_modal"
+            className="food_modal food_edit_modal"
         >
             <AddFoodPlanModal
                 isOpen={addFoodPlanModal}
@@ -171,7 +220,11 @@ const FoodEditModal = (props: IProps) => {
             />
 
             <div className='header'>
+                <div className="left"></div>
                 <h2>{foodContext.activeFood?.name}</h2>
+                <div className="right" onClick={CloseModal}>
+                    <CloseIcon />
+                </div>
             </div>
 
             <div className="content">
@@ -205,15 +258,18 @@ const FoodEditModal = (props: IProps) => {
                         initialValues={{
                             name: foodContext.activeFood?.name,
                             tags: GetOptionsFromTags(foodContext.activeFood?.tags),
+                            recipes: GetOptionsFromRecipes(foodContext.activeFood?.recipes),
                         }}
                     >
-                        {({ values, errors, handleChange, setFieldValue, handleSubmit }) => (
+                        {({ values, errors, handleChange, setFieldValue, handleSubmit, dirty }) => (
                             <form onSubmit={handleSubmit}>
                                 <label>Name</label>
                                 <input
                                     type="text"
+                                    name="name"
                                     value={values.name}
                                     onChange={handleChange}
+                                    placeholder="e.g. Steak Pie"
                                 />
 
                                 <label>Tags</label>
@@ -226,9 +282,24 @@ const FoodEditModal = (props: IProps) => {
                                     options={TAG_OPTIONS}
                                 />
 
-                                <button type="submit">
-                                    Edit
-                                </button>
+                                <label>Recipes</label>
+                                <Select
+                                    name='recipes'
+                                    isMulti={true}
+                                    value={values.recipes}
+                                    onChange={(option) => setFieldValue('recipes', option)}
+                                    isSearchable={true}
+                                    options={recipeOptions}
+                                />
+
+                                <div className="edit_buttons">
+                                    <button type="submit" className={`${dirty ? '' : 'disabled'} alt_button`}>
+                                        Edit
+                                    </button>
+                                    <button type="button" className="delete" onClick={DeleteFood}>
+                                        <DeleteOutlineIcon />
+                                    </button>
+                                </div>
                             </form>
                         )}
 

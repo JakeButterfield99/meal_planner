@@ -1,15 +1,13 @@
-export interface Recipe {
-    id: number,
-    ingredients: JSON,
-    method: JSON,
-    oven_temp?: number,
+export type Recipe = {
+    id: string,
+    name: string,
 }
 
 export interface Food {
     id: number,
     image?: string,
     name: string,
-    recipe_id?: number,
+    recipes: Recipe[],
     tags?: MealType[],
 }
 

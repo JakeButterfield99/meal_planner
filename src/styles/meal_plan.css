@@ -120,12 +120,12 @@
 
 .plan_entry {
     width: 400px;
-    height: 275px;
+    min-height: 275px;
     padding: 10px;
     background-color: white;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    gap: 10px;
     border-radius: 10px;
     flex-shrink: 0;
 }
@@ -165,6 +165,46 @@
 }
 
 .plan_entry .meal {
+    color: var(--accent);
+}
+
+.plan_entry .actions {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.plan_entry .actions .button {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    border: 1px solid var(--grey);
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.plan_entry .actions .button:hover {
+    background-color: var(--teeny-grey);
+}
+
+.plan_entry .actions .button svg,
+.plan_entry .actions .button p {
+    color: var(--grey);
+}
+
+.plan_entry .actions .button.red {
+    border: 1px solid var(--accent);
+}
+
+.plan_entry .actions .button.red:hover {
+    background-color: var(--accent_low);
+}
+
+.plan_entry .actions .button.red svg,
+.plan_entry .actions .button.red p {
     color: var(--accent);
 }
 

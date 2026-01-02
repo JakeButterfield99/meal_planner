@@ -1,5 +1,5 @@
 import React, { ReactNode, useContext, useEffect, useState } from "react";
-import { MealPlan } from "../types/MealPlan";
+import { MealPlan, PlanItem } from "../types/MealPlan";
 import planService from "../services/plan.service";
 
 export interface IMealPlanContext {
@@ -9,6 +9,8 @@ export interface IMealPlanContext {
     setMealPlan: Function,
     activePlanDate?: Date,
     setActivePlanDate: Function,
+    activePlanItem?: PlanItem,
+    setActivePlanItem: Function,
     RefreshMealPlan: Function,
 }
 
@@ -18,15 +20,13 @@ export const MealPlanProvider = ({ children }: { children: ReactNode }) => {
     const [activeMonday, setActiveMonday] = useState<Date>();
     const [mealPlan, setMealPlan] = useState<MealPlan>();
     const [activePlanDate, setActivePlanDate] = useState<Date>();
+    const [activePlanItem, setActivePlanItem] = useState<PlanItem>();
 
     function RefreshMealPlan() {
         if (!activeMonday) return;
 
-        console.log("REFRESH PLAN", activeMonday);
-
         planService.GetMealPlan(activeMonday)
             .then((value) => {
-                console.log("GOT MEAL PLAN", value);
                 setMealPlan(value);
             })
             .catch((err) => {
@@ -44,6 +44,7 @@ export const MealPlanProvider = ({ children }: { children: ReactNode }) => {
             activeMonday, setActiveMonday,
             mealPlan, setMealPlan,
             activePlanDate, setActivePlanDate,
+            activePlanItem, setActivePlanItem,
             RefreshMealPlan,
         }}>
             {children}

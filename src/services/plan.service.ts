@@ -8,7 +8,7 @@ async function GetMealPlan(monday: Date): Promise<MealPlan> {
 
     return new Promise<MealPlan>(async (resolve, reject) => {
         try {
-            const response = await api.get('/meal_plan', {
+            const response = await api.get('meal_plan', {
                 params: { monday: mon_str }
             });
             return resolve(response.data);
@@ -40,7 +40,22 @@ async function AddListItem(
     });
 }
 
+async function DeleteListItem(id: number): Promise<void> {
+    return new Promise<void>(async (resolve, reject) => {
+        try {
+            const response = await api.delete(`meal_plan/${id}`);
+            if (response.status === 200)
+                resolve();
+            reject(response.status);
+        }
+        catch (err) {
+            reject(err);
+        }
+    });
+}
+
 export default {
     GetMealPlan,
     AddListItem,
+    DeleteListItem,
 }

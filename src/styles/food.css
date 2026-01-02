@@ -20,6 +20,30 @@
     padding: 2px;
 }
 
+#create_btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background-color: var(--accent);
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.8);
+    cursor: pointer;
+}
+
+#create_btn:hover {
+    transform: scale(1.1);
+}
+
+#create_btn svg {
+    color: white;
+    font-size: 32px;
+}
+
 .food_entry {
     width: 400px;
     height: fit-content;

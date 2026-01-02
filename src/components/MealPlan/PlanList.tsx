@@ -6,6 +6,7 @@ import { GetDateKey, GetDateText } from "../../utils/date";
 import PlanEntry from "./PlanEntry";
 
 import AddIcon from '@mui/icons-material/Add';
+import { useCallback } from "react";
 
 function GetPlanItems(mealPlan: MealPlan, date: Date): PlanItem[] {
 	const items: PlanItem[] = [];
@@ -46,10 +47,7 @@ const PlanList = (props: IProps) => {
 					return (
 						<PlanEntry
 							key={index}
-							image={value.food.image}
-							name={value.food.name}
-							assigned={value.assigned}
-							type={value.type}
+							item={value}
 						/>
 					)
 				})}

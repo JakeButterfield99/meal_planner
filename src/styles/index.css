@@ -88,6 +88,19 @@ button.alt_button {
     background-color: var(--alt_colour);
 }
 
+button.disabled {
+    opacity: 0.3;
+}
+
+button.small {
+    width: fit-content;
+    height: 30px;
+    background-color: var(--light-grey);
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+}
+
 
 /* Layout */
 

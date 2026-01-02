@@ -1,6 +1,6 @@
 import api from "./axios";
 
-import { Food, MealType } from "../types/MealPlan";
+import { Food, MealType, Recipe } from "../types/MealPlan";
 
 async function GetFood(): Promise<Food[]> {
     return new Promise<Food[]>(async (resolve, reject) => {
@@ -32,16 +32,34 @@ async function EditFood(
     id: number,
     name: string,
     image: string | undefined,
-    tags: MealType[]
+    tags: MealType[],
+    recipes: Recipe[],
 ): Promise<Food> {
     return new Promise<Food>(async (resolve, reject) => {
         try {
             const response = await api.patch(`/food/${id}`, {
                 name,
                 image,
-                tags
+                tags,
+                recipes,
             });
             return resolve(response.data);
+        }
+        catch (err) {
+            reject(err);
+        }
+    });
+}
+
+async function DeleteFood(
+    id: number
+): Promise<void> {
+    return new Promise<void>(async (resolve, reject) => {
+        try {
+            const response = await api.delete(`/food/${id}`);
+            if (response.status === 200)
+                resolve();
+            reject(response.status);
         }
         catch (err) {
             reject(err);
@@ -52,5 +70,6 @@ async function EditFood(
 export default {
     GetFood,
     CreateFood,
-    EditFood
+    EditFood,
+    DeleteFood
 }

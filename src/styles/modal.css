@@ -22,12 +22,29 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 20px;
     border-bottom: 2px solid var(--light-grey);
+    height: 75px;
 }
 
-.food_edit_modal .header {
+.ReactModal__Content .header .left,
+.ReactModal__Content .header .right {
+    width: 75px;
+    height: 75px;
+    display: flex;
+    align-items: center;
     justify-content: center;
+    cursor: pointer;
+}
+
+.ReactModal__Content .header .left svg,
+.ReactModal__Content .header .right svg {
+    color: var(--grey);
+    font-size: 24px;
+}
+
+.ReactModal__Content .header .left:hover,
+.ReactModal__Content .header .right:hover {
+    transform: scale(1.1);
 }
 
 .ReactModal__Content .buttons {
@@ -132,6 +149,23 @@
     border-radius: 10px;
 }
 
+.ReactModal__Content .details .edit_buttons {
+    display: flex;
+    gap: 5px;
+}
+
+.ReactModal__Content .details .edit_buttons button:first-of-type {
+    flex: 4;
+}
+
+.ReactModal__Content .details .edit_buttons button:last-of-type {
+    flex: 1;
+}
+
+.ReactModal__Content .details .edit_buttons .delete svg {
+    font-size: 32px;
+}
+
 .ReactModal__Content .date_selector {
     gap: 0;
     justify-content: space-between;
@@ -179,34 +213,56 @@
     Modal Instance Specific
 */
 
+.ReactModal__Content.prompt_modal {
+    z-index: 99;
+    width: 40vw;
+    height: auto;
+    min-height: 0;
+}
+
+.ReactModal__Content.prompt_modal .header {
+    justify-content: center;
+}
+
 .ReactModal__Content.plan_item_modal form {
     gap: 20px;
 }
+
+.ReactModal__Content.food_modal .header {
+    justify-content: center;
+}
+
+.ReactModal__Content.food_modal label {
+    margin-bottom: 0;
+}
+
+.ReactModal__Content.food_modal .plan_section {
+    border-top: 2px solid var(--light-grey);
+    padding: 20px;
+}
+
+.ReactModal__Content.food_modal .plan_section h2 {
+    font-size: 20px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.ReactModal__Content.food_modal .short_date {
+    text-transform: lowercase;
+    font-weight: 500;
+}
+
+.ReactModal__Content.food_modal .header h2 {
+    flex: 1;
+    text-align: center;
+}
+
 
 .ReactModal__Content.food_edit_modal form {
     gap: 10px;
     padding: 0 30px;
 }
 
-.ReactModal__Content.food_edit_modal label {
-    margin-bottom: 0;
-}
-
-.ReactModal__Content.food_edit_modal .plan_section {
-    border-top: 2px solid var(--light-grey);
-    padding: 20px;
-}
-
-.ReactModal__Content.food_edit_modal .plan_section h2 {
-    font-size: 20px;
-    text-align: center;
-    margin-bottom: 10px;
-}
-
-.ReactModal__Content.food_edit_modal .short_date {
-    text-transform: lowercase;
-    font-weight: 500;
-}
 
 .ReactModal__Content.add_food_modal {
     min-height: 0;
@@ -215,4 +271,94 @@
 
 .ReactModal__Content.add_food_modal form {
     gap: 20px;
+}
+
+
+.ReactModal__Content.food_create_modal {
+    min-height: 0;
+    height: auto;
+}
+
+.ReactModal__Content.food_create_modal .header {
+    justify-content: center;
+}
+
+
+.ReactModal__Content.food_view_modal .info_container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 20px;
+    min-height: 250px;
+}
+
+.ReactModal__Content.food_view_modal .info_container .tags {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+}
+
+.ReactModal__Content.food_view_modal .info_container .tags .tag {
+    border: 1px solid var(--dark_grey);
+    color: var(--dark_grey);
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+.ReactModal__Content.food_view_modal .info_container .recipes {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.ReactModal__Content.food_view_modal .info_container .recipes .recipe {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    background-color: var(--light-grey);
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    color: var(--dark_grey);
+    font-weight: 600;
+}
+
+.ReactModal__Content.food_view_modal .info_container .recipes .recipe .link {
+    margin-left: auto;
+    cursor: pointer;
+}
+
+
+.ReactModal__Content.recipe_modal {
+    height: 90vh;
+}
+
+.ReactModal__Content.recipe_modal .header {
+    justify-content: center;
+}
+
+.ReactModal__Content.recipe_modal .header h2 {
+    flex: 1;
+    text-align: center;
+}
+
+.ReactModal__Content.recipe_modal .ingredients_list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.ReactModal__Content.recipe_modal .ingredients_list .ingredient {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    gap: 5px;
+}
+
+.ReactModal__Content.recipe_modal .content {
+    overflow: hidden;
+    overflow-y: scroll;
 }
