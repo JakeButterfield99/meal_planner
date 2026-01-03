@@ -1,4 +1,4 @@
-import { Recipe } from "../types/MealPlan";
+import { Recipe, RecipeContents } from "../types/MealPlan";
 import api from "./axios";
 
 async function GetAllRecipes(): Promise<Recipe[]> {
@@ -13,6 +13,19 @@ async function GetAllRecipes(): Promise<Recipe[]> {
     });
 }
 
+async function GetRecipe(id: string): Promise<RecipeContents> {
+    return new Promise<RecipeContents>(async (resolve, reject) => {
+        try {
+            const response = await api.get(`recipe/${id}`);
+            return resolve(response.data);
+        }
+        catch (err) {
+            reject(err);
+        }
+    });
+}
+
 export default {
-    GetAllRecipes
+    GetAllRecipes,
+    GetRecipe
 }

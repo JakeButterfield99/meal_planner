@@ -18,6 +18,7 @@ import EditIcon from '@mui/icons-material/Edit';
 
 import DateSelector from "../components/MealPlan/DateSelector";
 import AddFoodPlanModal from "./AddFoodPlanModal";
+import { Recipe } from "../types/MealPlan";
 
 
 interface IProps {
@@ -46,6 +47,10 @@ const FoodViewModal = (props: IProps) => {
     function OpenAddFoodPlan(date: Date) {
         setActiveDate(date);
         setAddFoodModal(true);
+    }
+
+    function OpenRecipe(recipe: Recipe) {
+        recipeContext.SetActiveRecipe(recipe);
     }
 
     async function AddToMealPlan(type: number, assigned: string) {
@@ -129,7 +134,11 @@ const FoodViewModal = (props: IProps) => {
                             <label>Recipes</label>
                             {foodContext.activeFood?.recipes?.map((val, idx) => {
                                 return (
-                                    <div key={idx} className="recipe">
+                                    <div
+                                        key={idx}
+                                        className="recipe"
+                                        onClick={() => OpenRecipe(val)}
+                                    >
                                         <RestaurantIcon />
                                         <p>{recipeContext.recipes.find(r => r.id === val.id)?.name}</p>
                                         <OpenInNewIcon className="link" />

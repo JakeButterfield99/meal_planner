@@ -5,14 +5,21 @@ import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
 import FastfoodIcon from '@mui/icons-material/Fastfood';
 import RecipeModal from "../../modals/RecipeModal";
 import { useFood } from "../../context/FoodContext";
+import ViewRecipeModal from "../../modals/ViewRecipeModal";
+import { useRecipe } from "../../context/RecipeContext";
 
 const DefaultLayout = () => {
     const foodContext = useFood();
+    const recipeContext = useRecipe();
 
     return (
         <main>
             <RecipeModal
-                isOpen={foodContext.activeRecipe !== undefined}
+                isOpen={false}
+            />
+
+            <ViewRecipeModal
+                isOpen={recipeContext.activeRecipe !== null}
             />
 
             <aside>

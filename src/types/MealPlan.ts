@@ -3,6 +3,16 @@ export type Recipe = {
     name: string,
 }
 
+export type RecipeData = {
+    text: string,
+    type: string,
+}
+
+export type RecipeContents = {
+    ingredients: RecipeData[],
+    method: RecipeData[],
+}
+
 export interface Food {
     id: number,
     image?: string,

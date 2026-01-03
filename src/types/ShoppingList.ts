@@ -1,6 +1,7 @@
 export interface ListItem {
-    name: string,
-    checked: boolean
+    id?: number;
+    item: string;
+    checked: boolean;
 }
 
 export type ShoppingList = ListItem[];

@@ -14,9 +14,6 @@ export interface IFoodContext {
     activeType?: MealType,
     setActiveType: Function,
 
-    activeRecipe?: Food,
-    setActiveRecipe: Function,
-
     RefreshFood: Function,
 }
 
@@ -49,7 +46,6 @@ export const FoodProvider = ({ children }: { children: ReactNode }) => {
             food, setFood,
             activeFood, setActiveFood,
             activeType, setActiveType,
-            activeRecipe, setActiveRecipe,
             RefreshFood
         }}>
             <FoodEditModal
