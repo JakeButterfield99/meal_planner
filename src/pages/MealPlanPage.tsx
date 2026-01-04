@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import MealPlan from "../components/MealPlan/MealPlan";
-import ShoppingList from "../components/ShoppingList";
+import ShoppingList from "../components/ShoppingList/ShoppingList";
 
 import '../styles/meal_plan.css';
+import '../styles/shopping_list.css';
+
 import AddPlanItemModal from "../modals/AddPlanItemModal";
 import { useMealPlan } from "../context/MealPlanContext";
 

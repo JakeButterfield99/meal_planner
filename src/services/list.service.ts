@@ -14,10 +14,65 @@ async function GetShoppingList(): Promise<ShoppingList> {
     });
 }
 
+async function CheckListEntry(
+    id: number,
+    checked: boolean
+): Promise<ShoppingList> {
+    return new Promise<ShoppingList>(async (resolve, reject) => {
+        try {
+            const response = await api.patch("shopping_list", {
+                id,
+                checked,
+            })
+            return resolve(response.data);
+        }
+        catch (err) {
+            console.log("CheckListEntry error=", err);
+            reject(err);
+        }
+    });
+}
+
+async function RemoveListEntry(
+    id: number
+): Promise<ShoppingList> {
+    return new Promise<ShoppingList>(async (resolve, reject) => {
+        try {
+            const response = await api.patch("shopping_list", {
+                id,
+                remove: true,
+            })
+            return resolve(response.data);
+        }
+        catch (err) {
+            console.log("RemoveListEntry error=", err);
+            reject(err);
+        }
+    });
+}
+
+async function IgnoreListEntry(
+    id: number
+): Promise<ShoppingList> {
+    return new Promise<ShoppingList>(async (resolve, reject) => {
+        try {
+            const response = await api.patch("shopping_list", {
+                id,
+                ignore: true,
+            })
+            return resolve(response.data);
+        }
+        catch (err) {
+            console.log("IgnoreListEntry error=", err);
+            reject(err);
+        }
+    });
+}
+
 async function GenerateList(planId: number): Promise<ShoppingList> {
     return new Promise<ShoppingList>(async (resolve, reject) => {
         try {
-            const response = await api.post("shopping_list", { planId })
+            const response = await api.post("shopping_list/generate", { planId })
             return resolve(response.data);
         }
         catch (err) {
@@ -27,7 +82,24 @@ async function GenerateList(planId: number): Promise<ShoppingList> {
     });
 }
 
+async function ClearList(): Promise<ShoppingList> {
+    return new Promise<ShoppingList>(async (resolve, reject) => {
+        try {
+            const response = await api.delete("shopping_list");
+            return resolve(response.data);
+        }
+        catch (err) {
+            console.log("ClearList error=", err);
+            reject(err);
+        }
+    });
+}
+
 export default {
     GetShoppingList,
-    GenerateList
+    CheckListEntry,
+    RemoveListEntry,
+    IgnoreListEntry,
+    GenerateList,
+    ClearList
 }

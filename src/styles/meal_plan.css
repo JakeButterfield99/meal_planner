@@ -128,6 +128,7 @@
     gap: 10px;
     border-radius: 10px;
     flex-shrink: 0;
+    align-self: flex-start;
 }
 
 .plan_entry:hover {
@@ -206,90 +207,4 @@
 .plan_entry .actions .button.red svg,
 .plan_entry .actions .button.red p {
     color: var(--accent);
-}
-
-
-/* SHOPPING LIST SECTION */
-
-#shopping_list {
-    width: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    flex-shrink: 0;
-    background-color: white;
-    padding: 20px 0;
-    box-shadow: 0 0 7px 0 rgba(0, 0, 0, 0.2);
-    transition: width 0.3s ease;
-    box-sizing: border-box;
-    overflow: hidden;
-    max-height: 100vh;
-    height: 100vh;
-}
-
-#shopping_list.open {
-    width: 350px;
-    padding: 20px;
-}
-
-#shopping_list div {
-    flex-shrink: 0;
-}
-
-#shopping_list .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-shrink: 0;
-}
-
-#shopping_list .header svg {
-    cursor: pointer;
-    font-size: 30px;
-    color: var(--grey);
-}
-
-#shopping_list .list {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    border: 1px solid var(--light-grey);
-    min-height: 0;
-    overflow-y: auto;
-}
-
-#shopping_list .list .entry {
-    width: 100%;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    padding: 0 10px;
-    color: var(--grey);
-    font-size: 20px;
-    border-bottom: 1px solid var(--light-grey);
-    gap: 10px;
-    cursor: pointer;
-    user-select: none;
-    overflow-y: scroll;
-}
-
-#shopping_list .list .entry:hover {
-    background-color: var(--teeny-grey);
-}
-
-#shopping_list .list .entry p {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-#shopping_list .list .entry input[type="checkbox"]:checked~p {
-    text-decoration: line-through;
-}
-
-#shopping_list .buttons {
-    flex-shrink: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
 }
