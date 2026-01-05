@@ -69,10 +69,10 @@ async function IgnoreListEntry(
     });
 }
 
-async function GenerateList(planId: number): Promise<ShoppingList> {
+async function GenerateList(): Promise<ShoppingList> {
     return new Promise<ShoppingList>(async (resolve, reject) => {
         try {
-            const response = await api.post("shopping_list/generate", { planId })
+            const response = await api.post("shopping_list/generate")
             return resolve(response.data);
         }
         catch (err) {
@@ -95,11 +95,41 @@ async function ClearList(): Promise<ShoppingList> {
     });
 }
 
+async function AddToAnyList(): Promise<void> {
+    return new Promise<void>(async (resolve, reject) => {
+        try {
+            const response = await api.post("shopping_list/anylist");
+            return resolve(response.data);
+        }
+        catch (err) {
+            console.log("ClearList error=", err);
+            reject(err);
+        }
+    });
+}
+
+async function AddIngredientToList(
+    item: string,
+): Promise<ShoppingList> {
+    return new Promise<ShoppingList>(async (resolve, reject) => {
+        try {
+            const response = await api.post("shopping_list/add", { item });
+            return resolve(response.data);
+        }
+        catch (err) {
+            console.log("AddIngredientToList error=", err);
+            reject(err);
+        }
+    });
+}
+
 export default {
     GetShoppingList,
     CheckListEntry,
     RemoveListEntry,
     IgnoreListEntry,
     GenerateList,
-    ClearList
+    ClearList,
+    AddToAnyList,
+    AddIngredientToList,
 }

@@ -3,6 +3,7 @@ import { MealPlanProvider } from "./MealPlanContext"
 import { FoodProvider } from "./FoodContext"
 import { ModalProvider } from "./ModalContext"
 import { RecipeProvider } from "./RecipeContext"
+import { ListProvider } from "./ListContext"
 
 interface IProps {
     children: ReactNode,
@@ -13,7 +14,9 @@ const ContextProvider = (props: IProps) => {
             <RecipeProvider>
                 <FoodProvider>
                     <MealPlanProvider>
-                        {props.children}
+                        <ListProvider>
+                            {props.children}
+                        </ListProvider>
                     </MealPlanProvider>
                 </FoodProvider>
             </RecipeProvider>

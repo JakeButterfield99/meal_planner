@@ -38,7 +38,7 @@ const PlanEntry = (props: IProps) => {
     function ShowRecipe(event: React.MouseEvent<HTMLDivElement>) {
         event.stopPropagation();
         if (!props.item.food) return;
-        foodContext.setActiveRecipe(props.item.food);
+        foodContext.setActiveFood(props.item.food);
     }
 
     function AddToShoppingCart(event: React.MouseEvent<HTMLDivElement>) {
@@ -75,7 +75,7 @@ const PlanEntry = (props: IProps) => {
                 <div className='actions'>
                     <div className='button' onClick={ShowRecipe}>
                         <RestaurantIcon />
-                        <p>Recipe</p>
+                        <p>Food</p>
                     </div>
                     <div className='button' onClick={AddToShoppingCart}>
                         <ShoppingCartIcon />

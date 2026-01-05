@@ -52,9 +52,15 @@ h2 {
 }
 
 h3 {
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 600;
     color: var(--grey);
+}
+
+h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--dark_grey);
 }
 
 label {
@@ -85,7 +91,7 @@ button:hover {
 }
 
 button.alt_button {
-    background-color: var(--alt_colour);
+    background-color: var(--grey);
 }
 
 button.disabled {

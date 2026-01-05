@@ -293,7 +293,13 @@ const FoodEditModal = (props: IProps) => {
                                 />
 
                                 <div className="edit_buttons">
-                                    <button type="submit" className={`${dirty ? '' : 'disabled'} alt_button`}>
+                                    <button
+                                        type="submit"
+                                        className={`${dirty ? '' : 'disabled'} alt_button`}
+                                        onClick={e => {
+                                            if (!dirty) return e.preventDefault();
+                                        }}
+                                    >
                                         Edit
                                     </button>
                                     <button type="button" className="delete" onClick={DeleteFood}>

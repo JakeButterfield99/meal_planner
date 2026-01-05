@@ -1,53 +1,51 @@
-export interface IngredientCategory {
-    category: string;
-    ingredients: string[];
-}
+// Parse ingredient name to just retrieve food without measurements, preparation etc.
+export function ParseIngredientName(input: string): string {
+    let text = input.toLowerCase().trim();
 
-export function parseIngredientCategories(text: string): IngredientCategory[] {
-    const lines = text
-        .split("\n")
-        .map(l => l.trim())
-        .filter(Boolean);
+    // Remove parenthetical notes
+    text = text.replace(/\([^)]*\)/g, "");
 
-    const categories: IngredientCategory[] = [];
-    let currentCategory: IngredientCategory | null = null;
+    // Unicode fraction characters
+    const fractions = "½⅓⅔¼¾⅛⅜⅝⅞";
 
-    const isCategoryLine = (line: string) =>
-        line === line.toUpperCase() && !/\d/.test(line);
+    // Remove leading quantities:
+    //  - 2-3
+    //  - 1/2
+    //  - ½
+    //  - 1½ / 2 ½
+    //  - ~680
+    //  - 680
+    const quantityRegex = new RegExp(
+        `^(~\\s*)?(` +
+        `\\d+\\s*(?:-|–|to)\\s*\\d+|` +        // 2-3
+        `\\d+\\/\\d+|` +                       // 1/2
+        `\\d+\\s*[${fractions}]|` +            // 2 ½
+        `\\d+[${fractions}]|` +                // 1½
+        `[${fractions}]|` +                    // ½
+        `\\d+(?:[.,]\\d+)?` +                  // 680, 1.5
+        `)\\s*`,
+        "i"
+    );
 
-    for (let rawLine of lines) {
-        // Remove bullets / squares / tabs / paste artifacts
-        let line = rawLine.replace(/^[•▢\-\t\u2022]+/g, "").trim();
+    text = text.replace(quantityRegex, "");
 
-        // Detect category headers
-        if (isCategoryLine(line)) {
-            currentCategory = {
-                category: line,
-                ingredients: []
-            };
-            categories.push(currentCategory);
-            continue;
-        }
+    // Remove units (supports things like g, kg, ml, tsp, tbsp)
+    text = text.replace(
+        /^(cups?|cup|tablespoons?|tbsp|teaspoons?|tsp|pounds?|lbs?|ounces?|oz|grams?|g|kilograms?|kg|milliliters?|ml|liters?|l|cloves?|pinch|dash|knobs|half|bunch)\b\s*/i,
+        ""
+    );
 
-        // Ensure a global category exists
-        if (!currentCategory) {
-            currentCategory = {
-                category: "global",
-                ingredients: []
-            };
-            categories.push(currentCategory);
-        }
+    // Remove "of" if it follows a unit
+    text = text.replace(/^of\s+/i, "");
 
-        // Remove parenthetical notes (Note 1, (500 ml), etc.)
-        line = line.replace(/\([^)]*\)/g, "").trim();
+    // Remove preparation notes after commas
+    text = text.split(",")[0];
 
-        // Remove "sub ..." text
-        line = line.replace(/sub\s+[^,]+/gi, "").trim();
+    // Remove trailing preparation phrases
+    text = text.replace(
+        /\b(chopped|diced|minced|sliced|cut|cubed|crushed|grated|cloves|inch|ground|tops|to taste)\b.*$/i,
+        ""
+    );
 
-        if (line.length > 0) {
-            currentCategory.ingredients.push(line);
-        }
-    }
-
-    return categories;
+    return text.trim();
 }

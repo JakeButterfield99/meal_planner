@@ -23,7 +23,7 @@ const ListEntry = (props: IProps) => {
     }
 
     return (
-        <div className="entry">
+        <div title={props.entry.item} className="entry">
             <input
                 type='checkbox'
                 checked={props.entry.checked}

@@ -41,3 +41,8 @@ export interface MealPlan {
     monday: string, // YYYY-MM-DD
     items: PlanItem[],
 }
+
+export interface AlertIngredient {
+    id: number,
+    item: string,
+}

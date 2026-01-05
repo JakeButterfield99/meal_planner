@@ -224,6 +224,10 @@
     justify-content: center;
 }
 
+.ReactModal__Content.plan_item_modal .header {
+    padding: 0 20px;
+}
+
 .ReactModal__Content.plan_item_modal form {
     gap: 20px;
 }
@@ -356,7 +360,8 @@
     gap: 0;
 }
 
-.ReactModal__Content.recipe_modal h3 {
+.ReactModal__Content.recipe_modal h3,
+.ReactModal__Content.recipe_modal h4 {
     margin-bottom: 10px;
 }
 
@@ -364,12 +369,47 @@
     margin-top: 20px;
 }
 
+.ReactModal__Content.recipe_modal h4:not(:first-of-type) {
+    margin-top: 10px;
+}
+
 .ReactModal__Content.recipe_modal .ingredient {
     display: flex;
     align-items: center;
     font-size: 16px;
     gap: 8px;
-    margin-bottom: 8px;
+    padding: 4px 10px;
+    box-sizing: border-box;
+    min-height: 35px;
+}
+
+.ReactModal__Content.recipe_modal .ingredient p {
+    flex: 1;
+}
+
+.ReactModal__Content.recipe_modal .ingredient:hover {
+    background-color: var(--teeny-grey);
+}
+
+.ReactModal__Content.recipe_modal .ingredient .btn {
+    cursor: pointer;
+    display: none;
+}
+
+.ReactModal__Content.recipe_modal .ingredient .btn:hover {
+    transform: scale(1.1);
+}
+
+.ReactModal__Content.recipe_modal .ingredient .btn svg {
+    font-size: 22px;
+}
+
+.ReactModal__Content.recipe_modal .ingredient:hover .btn {
+    display: block;
+}
+
+.ReactModal__Content.recipe_modal .ingredient .btn.btn-active {
+    display: block;
 }
 
 .ReactModal__Content.recipe_modal .step {
@@ -381,6 +421,7 @@
     border: 1px solid var(--light-grey);
     border-radius: 5px;
     padding: 10px 5px;
+    margin-left: 10px;
 }
 
 .ReactModal__Content.recipe_modal .step p {

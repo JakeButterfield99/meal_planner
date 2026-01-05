@@ -169,10 +169,10 @@ const AddPlanItemModal = (props: IProps) => {
             </Formik>
 
             <div className="buttons">
-                <button onClick={CloseModal}>
+                <button className='alt_button' onClick={CloseModal}>
                     CLOSE
                 </button>
-                <button className='alt_button' onClick={SubmitForm} type='submit'>
+                <button onClick={SubmitForm} type='submit'>
                     ADD
                 </button>
             </div>

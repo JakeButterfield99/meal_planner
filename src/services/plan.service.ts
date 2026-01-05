@@ -1,7 +1,7 @@
 import api from "./axios";
 
 import { GetDateKey } from "../utils/date";
-import { MealPlan, PlanItem } from "../types/MealPlan";
+import { AlertIngredient, MealPlan, PlanItem } from "../types/MealPlan";
 
 async function GetMealPlan(monday: Date): Promise<MealPlan> {
     const mon_str = GetDateKey(monday);
@@ -54,8 +54,50 @@ async function DeleteListItem(id: number): Promise<void> {
     });
 }
 
+async function GetAlertIngredients(): Promise<AlertIngredient[]> {
+    return new Promise<AlertIngredient[]>(async (resolve, reject) => {
+        try {
+            const response = await api.get('meal_plan/alert_ingredients');
+            return resolve(response.data);
+        }
+        catch (err) {
+            reject(err);
+        }
+    });
+}
+
+async function AddAlertIngredient(item: string): Promise<AlertIngredient[]> {
+    return new Promise<AlertIngredient[]>(async (resolve, reject) => {
+        try {
+            const response = await api.post(`meal_plan/alert_ingredients`, {
+                item
+            });
+            resolve(response.data);
+        }
+        catch (err) {
+            reject(err);
+        }
+    });
+}
+
+async function RemoveAlertIngredient(item: number): Promise<AlertIngredient[]> {
+    return new Promise<AlertIngredient[]>(async (resolve, reject) => {
+        try {
+            const response = await api.delete(`meal_plan/alert_ingredients/${item}`);
+            resolve(response.data);
+        }
+        catch (err) {
+            reject(err);
+        }
+    });
+}
+
 export default {
     GetMealPlan,
     AddListItem,
     DeleteListItem,
+
+    GetAlertIngredients,
+    AddAlertIngredient,
+    RemoveAlertIngredient,
 }

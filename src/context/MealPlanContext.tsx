@@ -1,16 +1,23 @@
 import React, { ReactNode, useContext, useEffect, useState } from "react";
-import { MealPlan, PlanItem } from "../types/MealPlan";
+import { AlertIngredient, MealPlan, PlanItem } from "../types/MealPlan";
 import planService from "../services/plan.service";
 
 export interface IMealPlanContext {
     activeMonday?: Date,
     setActiveMonday: Function,
+
     mealPlan?: MealPlan,
     setMealPlan: Function,
+
     activePlanDate?: Date,
     setActivePlanDate: Function,
+
     activePlanItem?: PlanItem,
     setActivePlanItem: Function,
+
+    alertIngredients: AlertIngredient[],
+    setAlertIngredients: Function,
+
     RefreshMealPlan: Function,
 }
 
@@ -21,6 +28,11 @@ export const MealPlanProvider = ({ children }: { children: ReactNode }) => {
     const [mealPlan, setMealPlan] = useState<MealPlan>();
     const [activePlanDate, setActivePlanDate] = useState<Date>();
     const [activePlanItem, setActivePlanItem] = useState<PlanItem>();
+    const [alertIngredients, setAlertIngredients] = useState<AlertIngredient[]>([]);
+
+    function GetAlertIngredients() {
+
+    }
 
     function RefreshMealPlan() {
         if (!activeMonday) return;
@@ -39,12 +51,17 @@ export const MealPlanProvider = ({ children }: { children: ReactNode }) => {
         RefreshMealPlan();
     }, [activeMonday])
 
+    useEffect(() => {
+        GetAlertIngredients();
+    }, [])
+
     return (
         <MealPlanContext.Provider value={{
             activeMonday, setActiveMonday,
             mealPlan, setMealPlan,
             activePlanDate, setActivePlanDate,
             activePlanItem, setActivePlanItem,
+            alertIngredients, setAlertIngredients,
             RefreshMealPlan,
         }}>
             {children}

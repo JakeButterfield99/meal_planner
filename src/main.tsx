@@ -25,7 +25,9 @@ createRoot(document.getElementById('root')!).render(
 			<link rel='icon' type='image/png' href={favicon} sizes='24x24' />
 		</Helmet>
 
-		<ToastContainer />
+		<ToastContainer
+			position='top-left'
+		/>
 
 		<ContextProvider>
 			<RouterProvider router={router} />
