@@ -46,7 +46,6 @@ const ShoppingList = (props: IProps) => {
     }
 
     function GenerateList() {
-        if (!planContext.mealPlan) return;
         setLoading(true);
         listService.GenerateList()
             .then((data) => {
@@ -80,7 +79,7 @@ const ShoppingList = (props: IProps) => {
     }
 
     return (
-        <div id='shopping_list' className={`${props.open && 'open'}`}>
+        <div className={`shopping_list ${props.open && 'open'}`}>
             <div className="header">
                 <h1>Shopping List</h1>
                 <CloseIcon

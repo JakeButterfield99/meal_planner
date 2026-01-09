@@ -4,6 +4,7 @@ import DefaultLayout from "./pages/layouts/DefaultLayout";
 
 import MealPlanPage from "./pages/MealPlanPage";
 import FoodPage from "./pages/FoodPage";
+import ShoppingListPage from "./pages/ShoppingListPage";
 
 const routes: RouteObject[] = [
     {
@@ -17,6 +18,10 @@ const routes: RouteObject[] = [
             {
                 path: '/food',
                 element: <FoodPage />
+            },
+            {
+                path: '/shopping',
+                element: <ShoppingListPage />
             }
         ]
     }

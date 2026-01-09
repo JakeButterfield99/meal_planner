@@ -10,13 +10,18 @@
     --light-grey: rgba(142, 142, 142, 0.4);
     --teeny-grey: rgba(142, 142, 142, 0.1);
     --alt_colour: #18aff0;
+
+    --mobile-header-height: 100px;
 }
 
 html,
 body,
+#root,
 main {
     min-height: 100vh;
     max-width: 100vw;
+    height: calc(100vh - var(--mobile-header-height));
+    ;
 }
 
 h1,
@@ -169,4 +174,47 @@ section:not(.Toastify) {
     height: 100vh;
     max-height: 100vh;
     overflow: hidden;
+}
+
+@media (max-width: 600px) {
+    main {
+        flex-direction: column;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+
+    aside {
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 20px;
+        gap: 20px;
+        height: 100px;
+    }
+
+    nav a {
+        height: 50px;
+        width: 50px;
+    }
+
+    nav a svg {
+        width: 30px !important;
+        height: 30px !important;
+        color: var(--grey);
+    }
+
+    aside .home_icon {
+        margin-bottom: 0;
+        height: 60px;
+        width: 60px;
+    }
+
+    nav {
+        flex-direction: row;
+    }
+
+    section:not(.Toastify) {
+        overflow: initial;
+        max-height: none;
+    }
 }

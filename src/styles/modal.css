@@ -207,6 +207,35 @@
     color: var(--dark_grey);
 }
 
+@media (max-width: 600px) {
+    .ReactModal__Content {
+        width: 95vw;
+        max-height: 85vh;
+        overflow: hidden;
+        overflow-y: scroll;
+    }
+
+    .ReactModal__Content .details {
+        flex-direction: column;
+    }
+
+    .ReactModal__Content .date_selector {
+        gap: 10px;
+        place-items: center;
+        padding: 0;
+    }
+
+    .ReactModal__Content .dates {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+    }
+
+    .ReactModal__Content .date_entry {
+        width: auto;
+    }
+}
+
 
 
 /*
@@ -222,6 +251,12 @@
 
 .ReactModal__Content.prompt_modal .header {
     justify-content: center;
+}
+
+@media (max-width: 600px) {
+    .ReactModal__Content.prompt_modal {
+        width: 90vw;
+    }
 }
 
 .ReactModal__Content.plan_item_modal .header {

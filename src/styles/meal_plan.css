@@ -116,6 +116,25 @@
     opacity: 1;
 }
 
+@media (max-width: 600px) {
+    #meal_plan {
+        padding: 0;
+        padding-top: 20px;
+    }
+
+    #meal_plan .header {
+        flex-direction: column;
+    }
+
+    #meal_plan .list_btn {
+        display: none;
+    }
+
+    #meal_plan .plan_list {
+        margin-left: 10px;
+    }
+}
+
 
 
 .plan_entry {

@@ -1,4 +1,4 @@
-#shopping_list {
+.shopping_list {
     width: 0;
     display: flex;
     flex-direction: column;
@@ -14,29 +14,29 @@
     height: 100vh;
 }
 
-#shopping_list.open {
+.shopping_list.open {
     width: 400px;
     padding: 20px;
 }
 
-#shopping_list div {
+.shopping_list div {
     flex-shrink: 0;
 }
 
-#shopping_list .header {
+.shopping_list .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-shrink: 0;
 }
 
-#shopping_list .header svg {
+.shopping_list .header svg {
     cursor: pointer;
     font-size: 30px;
     color: var(--grey);
 }
 
-#shopping_list .list {
+.shopping_list .list {
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -45,7 +45,7 @@
     overflow-y: auto;
 }
 
-#shopping_list .list .loading {
+.shopping_list .list .loading {
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -53,12 +53,12 @@
     justify-content: center;
 }
 
-#shopping_list .list .loading svg {
+.shopping_list .list .loading svg {
     color: var(--light-grey);
     font-size: 64px;
 }
 
-#shopping_list .list .entry {
+.shopping_list .list .entry {
     width: 100%;
     height: 40px;
     display: flex;
@@ -73,22 +73,22 @@
     overflow-y: scroll;
 }
 
-#shopping_list .list .entry:hover {
+.shopping_list .list .entry:hover {
     background-color: var(--teeny-grey);
 }
 
-#shopping_list .list .entry:last-of-type {
+.shopping_list .list .entry:last-of-type {
     border-bottom: none;
 }
 
-#shopping_list .list .entry p {
+.shopping_list .list .entry p {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     flex: 1;
 }
 
-#shopping_list .list .entry svg {
+.shopping_list .list .entry svg {
     font-size: 24px;
     color: var(--grey);
     cursor: pointer;
@@ -96,32 +96,32 @@
     display: none;
 }
 
-#shopping_list .list .entry:hover svg {
+.shopping_list .list .entry:hover svg {
     display: block;
 }
 
-#shopping_list .list .entry:hover svg:hover {
+.shopping_list .list .entry:hover svg:hover {
     transform: scale(1.2);
     color: var(--bg_dark);
 }
 
-#shopping_list .list .entry input[type="checkbox"]:checked~p {
+.shopping_list .list .entry input[type="checkbox"]:checked~p {
     text-decoration: line-through;
 }
 
-#shopping_list .list h3 {
+.shopping_list .list h3 {
     margin-left: 10px;
     margin-top: 10px;
     opacity: 0.5;
 }
 
-#shopping_list .buttons {
+.shopping_list .buttons {
     flex-shrink: 0;
     display: flex;
     align-items: center;
 }
 
-#shopping_list .buttons .button {
+.shopping_list .buttons .button {
     border: 1px solid var(--light-grey);
     min-width: 40px;
     min-height: 40px;
@@ -133,27 +133,47 @@
     cursor: pointer;
 }
 
-#shopping_list .buttons .button.btn_left {
+.shopping_list .buttons .button.btn_left {
     border-radius: 5px 0 0 5px;
 }
 
-#shopping_list .buttons .button.btn_right {
+.shopping_list .buttons .button.btn_right {
     border-radius: 0 5px 5px 0;
 }
 
-#shopping_list .buttons .button.middle {
+.shopping_list .buttons .button.middle {
     border-left: none;
     border-right: none;
     flex: 1;
     color: var(--alt_colour);
 }
 
-#shopping_list .buttons .button:hover {
+.shopping_list .buttons .button:hover {
     background-color: var(--light-grey);
     color: white;
 }
 
-#shopping_list .buttons .button.middle:hover {
+.shopping_list .buttons .button.middle:hover {
     background-color: var(--alt_colour);
     color: white;
+}
+
+/* Page Specific */
+
+#shopping_list_page {
+    height: calc(100vh - var(--mobile-header-height));
+}
+
+#shopping_list_page .shopping_list.open {
+    width: 100%;
+    height: 100%;
+    gap: 20px;
+}
+
+#shopping_list_page .header {
+    justify-content: center;
+}
+
+#shopping_list_page .header svg {
+    display: none;
 }

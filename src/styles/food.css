@@ -15,6 +15,7 @@
     flex-wrap: wrap;
     gap: 10px;
     flex-shrink: 0;
+    overflow: hidden;
     overflow-y: scroll;
     padding-bottom: 30px;
     padding: 2px;
@@ -77,4 +78,14 @@
 .food_entry .buttons {
     display: flex;
     gap: 10px;
+}
+
+@media (max-width: 600px) {
+    #food_page {
+        padding: 20px 10px 0 10px;
+    }
+
+    .food_entry {
+        width: 100%;
+    }
 }

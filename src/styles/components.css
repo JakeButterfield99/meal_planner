@@ -30,3 +30,24 @@
 .type_selector .option.active {
     opacity: 1;
 }
+
+@media (max-width: 600px) {
+
+    .date_selector,
+    .type_selector {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        place-items: center;
+        width: 100%;
+        padding: 0 20px;
+    }
+
+    .type_selector {
+        gap: 20px;
+    }
+
+    .date_selector .option,
+    .type_selector .option {
+        width: 100%;
+    }
+}
