@@ -27,6 +27,7 @@ export enum MealType {
     DINNER,
     SNACK
 }
+export const MealTypeOrder = Object.values(MealType);
 
 export interface PlanItem {
     id: number,

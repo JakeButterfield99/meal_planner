@@ -1,6 +1,6 @@
 import { toast } from "react-toastify";
 import { useMealPlan } from "../../context/MealPlanContext";
-import { MealPlan, PlanItem } from "../../types/MealPlan";
+import { MealPlan, MealTypeOrder, PlanItem } from "../../types/MealPlan";
 import { GetDateKey, GetDateText } from "../../utils/date";
 
 import PlanEntry from "./PlanEntry";
@@ -37,13 +37,17 @@ const PlanList = (props: IProps) => {
 		context.setActivePlanDate(props.date);
 	}
 
+	const sortedItems = items.sort((a, b) => {
+		return MealTypeOrder.indexOf(a.type) - MealTypeOrder.indexOf(b.type)
+	});
+
 	return (
 		<div className="plan_list">
 			<div className="date">
 				<h2>{GetDateText(props.date)}</h2>
 			</div>
 			<div className="list_items">
-				{items.map((value, index) => {
+				{sortedItems.map((value, index) => {
 					return (
 						<PlanEntry
 							key={index}
