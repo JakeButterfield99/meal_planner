@@ -2,11 +2,10 @@ import { useEffect, useRef } from 'react';
 
 import planService from '../services/plan.service';
 import foodService from '../services/food.service';
-import { Food, MealType } from '../types/MealPlan';
+import { Food } from '../types/MealPlan';
 import { useMealPlan } from '../context/MealPlanContext';
 import { useFood } from '../context/FoodContext';
 
-import { GetTypeText } from '../utils/food';
 import { GetDateKey, GetDateText } from '../utils/date';
 import { ASSIGNED_OPTIONS, Option, TYPE_OPTIONS } from '../utils/form';
 
@@ -28,6 +27,7 @@ function MapFoodOptions(food: Food[]): Option[] {
 interface IProps {
     isOpen: boolean,
     setIsOpen: Function,
+    date?: Date,
 }
 const AddPlanItemModal = (props: IProps) => {
     const mealContext = useMealPlan();
@@ -42,15 +42,16 @@ const AddPlanItemModal = (props: IProps) => {
 
     // The form has been submitted
     function OnSubmit(values: FormikValues) {
-        if (!mealContext.mealPlan?.id || !mealContext.activePlanDate)
+        if (!mealContext.mealPlan?.id || !props.date)
             return;
 
         planService.AddListItem(
             mealContext.mealPlan.id,
-            GetDateKey(mealContext.activePlanDate),
+            GetDateKey(props.date),
             values.food.value,
             values.type.value,
-            values.assigned.value
+            values.assigned.value,
+            values.notes
         ).then(() => {
             toast(`Item added to list`);
             mealContext.RefreshMealPlan();
@@ -60,7 +61,6 @@ const AddPlanItemModal = (props: IProps) => {
     }
 
     function CloseModal() {
-        mealContext.setActivePlanDate(undefined);
         props.setIsOpen(false);
     }
 
@@ -93,7 +93,7 @@ const AddPlanItemModal = (props: IProps) => {
         });
     }
 
-    let date_str = mealContext.activePlanDate ? GetDateText(mealContext.activePlanDate) : "";
+    let date_str = props.date ? GetDateText(props.date) : "";
 
     return (
         <Modal
@@ -113,10 +113,11 @@ const AddPlanItemModal = (props: IProps) => {
                 initialValues={{
                     food: null,
                     type: null,
-                    assigned: null
+                    assigned: null,
+                    notes: null,
                 }}
             >
-                {({ values, errors, setFieldValue }) => (
+                {({ values, errors, setFieldValue, handleChange }) => (
                     <form>
                         <div className="field">
                             <label>Food</label>
@@ -163,6 +164,16 @@ const AddPlanItemModal = (props: IProps) => {
                             {errors.assigned &&
                                 <p className='error'>{`${errors.assigned}`}</p>
                             }
+                        </div>
+
+                        <div className="field">
+                            <label>Notes</label>
+                            <textarea
+                                name='notes'
+                                value={values.notes || ""}
+                                onChange={handleChange}
+                                rows={4}
+                            />
                         </div>
                     </form>
                 )}

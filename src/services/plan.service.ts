@@ -24,12 +24,13 @@ async function AddListItem(
     date: string,
     foodId: number,
     type: number,
-    assigned: string
+    assigned: string,
+    notes: string
 ): Promise<PlanItem> {
     return new Promise<PlanItem>(async (resolve, reject) => {
         try {
             const response = await api.post("meal_plan", {
-                planId, date, assigned, type, foodId
+                planId, date, assigned, type, foodId, notes
             })
             return resolve(response.data);
         }
@@ -49,6 +50,43 @@ async function DeleteListItem(id: number): Promise<void> {
             reject(response.status);
         }
         catch (err) {
+            reject(err);
+        }
+    });
+}
+
+async function AddNote(
+    planId: number,
+    date: string,
+    notes: string
+): Promise<PlanItem> {
+    return new Promise<PlanItem>(async (resolve, reject) => {
+        try {
+            const response = await api.post("meal_plan/add_note", {
+                planId, date, notes
+            })
+            return resolve(response.data);
+        }
+        catch (err) {
+            console.log("AddNote error=", err);
+            reject(err);
+        }
+    });
+}
+
+async function EditNote(
+    id: number,
+    notes: string
+) {
+    return new Promise<PlanItem>(async (resolve, reject) => {
+        try {
+            const response = await api.patch(`meal_plan/${id}`, {
+                notes
+            })
+            return resolve(response.data);
+        }
+        catch (err) {
+            console.log("EditNote error=", err);
             reject(err);
         }
     });
@@ -96,6 +134,8 @@ export default {
     GetMealPlan,
     AddListItem,
     DeleteListItem,
+    AddNote,
+    EditNote,
 
     GetAlertIngredients,
     AddAlertIngredient,

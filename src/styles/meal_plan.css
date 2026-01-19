@@ -88,6 +88,7 @@
     justify-content: center;
     align-items: center;
     flex-shrink: 0;
+    position: relative;
 }
 
 .plan_list .add_container .add_btn {
@@ -112,6 +113,26 @@
 }
 
 .plan_list .add_container .add_btn:hover svg {
+    color: var(--accent);
+    opacity: 1;
+}
+
+.plan_list .add_container ul {
+    background-color: white;
+    border-radius: 10px;
+    list-style: none;
+    margin: 0;
+    padding: 5px 10px;
+    font-size: 18px;
+}
+
+.plan_list .add_container li {
+    padding: 5px 0;
+    opacity: 0.6;
+    cursor: pointer;
+}
+
+.plan_list .add_container li:hover {
     color: var(--accent);
     opacity: 1;
 }
@@ -188,6 +209,13 @@
     color: var(--accent);
 }
 
+.plan_entry .notes {
+    background-color: var(--mid-grey);
+    padding: 10px;
+    font-style: italic;
+    border-radius: 5px;
+}
+
 .plan_entry .actions {
     width: 100%;
     display: flex;
@@ -226,4 +254,19 @@
 .plan_entry .actions .button.red svg,
 .plan_entry .actions .button.red p {
     color: var(--accent);
+}
+
+/* Notes */
+
+.plan_entry.note {
+    width: 200px;
+}
+
+.plan_entry.note .icon {
+    color: var(--grey);
+    font-size: 32px;
+}
+
+.plan_entry.note .notes {
+    flex: 1;
 }

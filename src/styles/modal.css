@@ -9,7 +9,6 @@
     border: 2px solid var(--light-grey);
     border-radius: 10px;
     width: 50vw;
-    min-height: 50vh;
     user-select: none;
     -webkit-tap-highlight-color: transparent;
     outline: none;
@@ -72,6 +71,11 @@
     padding: 2px 8px;
     box-sizing: border-box;
     color: hsl(0, 0%, 50%);
+}
+
+.ReactModal__Content form textarea {
+    display: block;
+    width: 100%;
 }
 
 .ReactModal__Content hr {

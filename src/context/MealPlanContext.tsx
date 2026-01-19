@@ -9,9 +9,6 @@ export interface IMealPlanContext {
     mealPlan?: MealPlan,
     setMealPlan: Function,
 
-    activePlanDate?: Date,
-    setActivePlanDate: Function,
-
     activePlanItem?: PlanItem,
     setActivePlanItem: Function,
 
@@ -26,13 +23,8 @@ const MealPlanContext = React.createContext<IMealPlanContext | undefined>(undefi
 export const MealPlanProvider = ({ children }: { children: ReactNode }) => {
     const [activeMonday, setActiveMonday] = useState<Date>();
     const [mealPlan, setMealPlan] = useState<MealPlan>();
-    const [activePlanDate, setActivePlanDate] = useState<Date>();
     const [activePlanItem, setActivePlanItem] = useState<PlanItem>();
     const [alertIngredients, setAlertIngredients] = useState<AlertIngredient[]>([]);
-
-    function GetAlertIngredients() {
-
-    }
 
     function RefreshMealPlan() {
         if (!activeMonday) return;
@@ -51,15 +43,10 @@ export const MealPlanProvider = ({ children }: { children: ReactNode }) => {
         RefreshMealPlan();
     }, [activeMonday])
 
-    useEffect(() => {
-        GetAlertIngredients();
-    }, [])
-
     return (
         <MealPlanContext.Provider value={{
             activeMonday, setActiveMonday,
             mealPlan, setMealPlan,
-            activePlanDate, setActivePlanDate,
             activePlanItem, setActivePlanItem,
             alertIngredients, setAlertIngredients,
             RefreshMealPlan,

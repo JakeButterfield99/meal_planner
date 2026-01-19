@@ -9,6 +9,7 @@ import ListAltIcon from '@mui/icons-material/ListAlt';
 interface IProps {
     shoppingListOpen: boolean,
     setShoppingListOpen: Function,
+    RequestAddPlanItem: Function,
 }
 const MealPlan = (props: IProps) => {
     const context = useMealPlan();
@@ -41,6 +42,7 @@ const MealPlan = (props: IProps) => {
                     <PlanList
                         key={index}
                         date={value}
+                        RequestAddPlanItem={props.RequestAddPlanItem}
                     />
                 )
             })}
