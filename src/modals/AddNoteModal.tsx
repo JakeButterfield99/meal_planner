@@ -21,7 +21,7 @@ const AddNoteModal = (props: IProps) => {
     const mealContext = useMealPlan();
     const formRef = useRef<FormikProps<FormikValues>>(null);
 
-    const is_edit = (props.existingItem !== undefined || props.existingItem !== null);
+    const is_edit = (props.existingItem !== undefined && props.existingItem !== null);
 
     function RequestAddNote(values: FormikValues) {
         if (!mealContext.mealPlan?.id || !props.date)
