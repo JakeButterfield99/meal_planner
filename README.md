@@ -6,6 +6,8 @@ It is the frontend portion of my Meal Planner application, a home-brewed meal pl
 
 This project is currently self-hosted on my home network.
 
+API Project [HERE](https://github.com/JakeButterfield99/meal_planner_api/)
+
 ## Features
 
 - Builds a 'plan' per week to store meals and notes for each day
