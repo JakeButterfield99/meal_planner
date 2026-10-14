@@ -1,4 +1,4 @@
-# Jake's Meal Planner API
+# Jake's Meal Planner
 
 This is a React-based frontend for planning meals, generating shopping lists, and organising recipes based on a weekly meal schedule.
 
