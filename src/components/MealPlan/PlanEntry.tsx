@@ -1,24 +1,24 @@
-import { PlanItem } from '../../types/MealPlan';
-import { GetTypeText } from '../../utils/food';
-import { GetImage } from '../../utils/image';
+import { PlanItem } from "../../types/MealPlan";
+import { GetTypeText } from "../../utils/food";
+import { GetImage } from "../../utils/image";
 
-import { useMealPlan } from '../../context/MealPlanContext';
-import { useModal } from '../../context/ModalContext';
-import { useFood } from '../../context/FoodContext';
+import { useMealPlan } from "../../context/MealPlanContext";
+import { useModal } from "../../context/ModalContext";
+import { useFood } from "../../context/FoodContext";
 
-import planService from '../../services/plan.service';
+import planService from "../../services/plan.service";
 
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
-import placeholder_img from '../../assets/placeholder_img.jpg';
-import RestaurantIcon from '@mui/icons-material/Restaurant';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditNoteIcon from '@mui/icons-material/EditNote';
+import placeholder_img from "../../assets/placeholder_img.jpg";
+import RestaurantIcon from "@mui/icons-material/Restaurant";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditNoteIcon from "@mui/icons-material/EditNote";
 
 interface IProps {
-    item: PlanItem,
-    onNoteEdit: Function,
+    item: PlanItem;
+    onNoteEdit: Function;
 }
 const PlanEntry = (props: IProps) => {
     const mealContext = useMealPlan();
@@ -29,12 +29,10 @@ const PlanEntry = (props: IProps) => {
     if (!props.item.food) return null;
 
     let image = placeholder_img;
-    if (props.item.food.image)
-        image = GetImage(props.item.food.image);
+    if (props.item.food.image) image = GetImage(props.item.food.image);
 
     function ToggleActive() {
-        if (is_active)
-            return mealContext.setActivePlanItem(undefined);
+        if (is_active) return mealContext.setActivePlanItem(undefined);
         mealContext.setActivePlanItem(props.item);
     }
 
@@ -49,13 +47,14 @@ const PlanEntry = (props: IProps) => {
     }
 
     function ConfirmRemoveEntry() {
-        planService.DeleteListItem(props.item.id)
+        planService
+            .DeleteListItem(props.item.id)
             .then(() => {
                 toast(`Removed Item: ${props.item.food!.name}`);
                 mealContext.setActivePlanItem(undefined);
                 mealContext.RefreshMealPlan();
             })
-            .catch(err => console.log("ConfirmRemoveEntry", err));
+            .catch((err) => console.log("ConfirmRemoveEntry", err));
     }
 
     function RemoveEntry(event: React.MouseEvent<HTMLDivElement>) {
@@ -65,7 +64,7 @@ const PlanEntry = (props: IProps) => {
             title: "Are you sure?",
             text: `Do you want to remove: ${props.item.food!.name}?`,
             confirm_cb: () => ConfirmRemoveEntry(),
-            cancel_cb: () => { },
+            cancel_cb: () => {},
         });
     }
 
@@ -74,45 +73,39 @@ const PlanEntry = (props: IProps) => {
             <img src={image} />
             <h3>{props.item.food.name}</h3>
 
-            {is_active &&
-                <>
-                    {props.item.notes && (
-                        <div className="notes">
-                            <p>{props.item.notes}</p>
-                        </div>
-                    )}
+            {props.item.notes && (
+                <div className="notes">
+                    <p>{props.item.notes}</p>
+                </div>
+            )}
 
-                    <div className='actions'>
-                        <div className='button' onClick={ShowRecipe}>
-                            <RestaurantIcon />
-                            <p>Food</p>
-                        </div>
-                        <div className='button' onClick={AddToShoppingCart}>
-                            <ShoppingCartIcon />
-                            <p>Add to Shopping Cart</p>
-                        </div>
-                        <div className='button' onClick={() => props.onNoteEdit()}>
-                            <EditNoteIcon />
-                            <p>Edit Note</p>
-                        </div>
-                        <div className='button red' onClick={RemoveEntry}>
-                            <DeleteIcon />
-                            <p>Remove</p>
-                        </div>
+            {is_active && (
+                <div className="actions">
+                    <div className="button" onClick={ShowRecipe}>
+                        <RestaurantIcon />
+                        <p>Food</p>
                     </div>
-                </>
-            }
+                    <div className="button" onClick={AddToShoppingCart}>
+                        <ShoppingCartIcon />
+                        <p>Add to Shopping Cart</p>
+                    </div>
+                    <div className="button" onClick={() => props.onNoteEdit()}>
+                        <EditNoteIcon />
+                        <p>Edit Note</p>
+                    </div>
+                    <div className="button red" onClick={RemoveEntry}>
+                        <DeleteIcon />
+                        <p>Remove</p>
+                    </div>
+                </div>
+            )}
 
             <div className="context">
-                <p className="assigned">
-                    {props.item.assigned}
-                </p>
-                <p className="meal">
-                    {GetTypeText(props.item.type!)}
-                </p>
+                <p className="assigned">{props.item.assigned}</p>
+                <p className="meal">{GetTypeText(props.item.type!)}</p>
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default PlanEntry;

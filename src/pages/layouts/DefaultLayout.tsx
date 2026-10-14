@@ -3,10 +3,10 @@ import { NavLink, Outlet } from "react-router-dom";
 import { useRecipe } from "../../context/RecipeContext";
 import { useFood } from "../../context/FoodContext";
 
-import HomeIcon from '@mui/icons-material/Home';
-import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
-import FastfoodIcon from '@mui/icons-material/Fastfood';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import HomeIcon from "@mui/icons-material/Home";
+import SpaceDashboardIcon from "@mui/icons-material/SpaceDashboard";
+import FastfoodIcon from "@mui/icons-material/Fastfood";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 import RecipeModal from "../../modals/RecipeModal";
 import ViewRecipeModal from "../../modals/ViewRecipeModal";
@@ -17,27 +17,21 @@ const DefaultLayout = () => {
 
     return (
         <main>
-            <RecipeModal
-                isOpen={false}
-            />
+            <RecipeModal isOpen={false} />
 
-            <ViewRecipeModal
-                isOpen={recipeContext.activeRecipe !== null}
-            />
+            <ViewRecipeModal isOpen={recipeContext.activeRecipe !== null} />
 
             <aside>
-                <HomeIcon className="home_icon" />
-
                 <nav>
-                    <NavLink to='/'>
+                    <NavLink to="/">
                         <SpaceDashboardIcon />
                     </NavLink>
 
-                    <NavLink to='/food'>
+                    <NavLink to="/food">
                         <FastfoodIcon />
                     </NavLink>
 
-                    <NavLink to='/shopping'>
+                    <NavLink to="/shopping">
                         <ShoppingCartIcon />
                     </NavLink>
                 </nav>
@@ -45,7 +39,7 @@ const DefaultLayout = () => {
 
             <Outlet />
         </main>
-    )
-}
+    );
+};
 
 export default DefaultLayout;

@@ -154,9 +154,11 @@
     #meal_plan .plan_list {
         margin-left: 10px;
     }
+
+    .plan_list .list_items {
+        gap: 10px;
+    }
 }
-
-
 
 .plan_entry {
     width: 400px;
@@ -254,6 +256,17 @@
 .plan_entry .actions .button.red svg,
 .plan_entry .actions .button.red p {
     color: var(--accent);
+}
+
+@media (max-width: 600px) {
+    .plan_entry {
+        width: 250px;
+        min-height: 200px;
+    }
+
+    .plan_entry img {
+        height: 100px;
+    }
 }
 
 /* Notes */

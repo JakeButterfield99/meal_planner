@@ -34,7 +34,6 @@
 }
 
 @media (max-width: 600px) {
-
     .date_selector,
     .type_selector {
         display: grid;
@@ -42,6 +41,7 @@
         place-items: center;
         width: 100%;
         padding: 0 20px;
+        gap: 10px;
     }
 
     .type_selector {
